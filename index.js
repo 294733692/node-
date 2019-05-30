@@ -3,11 +3,13 @@ var url = require("url")
 var fs = require('fs')
 var globalConfig = require("./config")
 var loader = require("./loader")
+var log = require("./log")
 
 http.createServer(function(request, response) {
   var pathName = url.parse(request.url).pathname
   var params = url.parse(request.url, true).query
   var isStatic = isStaticsRequset(pathName)
+  log(pathName)
   if (isStatic) {// 请求静态文件
     try {
       var data = fs.readFileSync(globalConfig["page_path"] + pathName)
@@ -35,6 +37,8 @@ http.createServer(function(request, response) {
     }
   }
 }).listen(globalConfig["port"])
+
+log("服务已启动")
 
 function isStaticsRequset(pathName) {
   for (var i = 0; i < globalConfig.static_file_type.length; i++) {
