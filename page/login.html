@@ -7,10 +7,31 @@
   <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-  <div>hello, world</div>
-  <img src="./image.jpeg" alt="">
-  <input type="text" placeholder="账户名">
-  <input type="password" placeholder="密码">
-  <input type="submit" value="提交">
+  <input type="text" id="stuNum" placeholder="学号">
+  <input type="password" id="password" placeholder="密码">
+  <input type="submit" value="提交" onclick="login()">
 </body>
+<script>
+  function login() {
+    console.log(111);
+    var getNum = document.getElementById("stuNum").value
+    var password = document.getElementById("password").value
+    var params = "stuNum=" + getNum + "&password=" + password
+
+    var xml = new XMLHttpRequest()
+    xml.open("GET", "/login?" + params, true)
+    xml.send(null)
+    xml.onreadystatechange = function() {
+      if(xml.readyState == 4 && xml.status == 200) {
+        console.log(xml.responseText);
+        console.log(typeof xml.responseText);
+        if(xml.responseText == "OK") {
+          alert("登录成功")
+        } else {
+          alert("登录失败，请重新登录")
+        }
+      }
+    }
+  }
+</script>
 </html>

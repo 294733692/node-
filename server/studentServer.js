@@ -4,4 +4,11 @@ function queryAllStudent(success) {
   studentDAO.queryAllStudent(success)
 }
 
-module.exports = {"queryAllStudent": queryAllStudent}
+function queryStudentByStuNum(stuNum, success) {
+  studentDAO.queryStudentByStuNum(stuNum, success)
+}
+
+module.exports = {
+  "queryAllStudent": queryAllStudent,
+  "queryStudentByStuNum": queryStudentByStuNum
+}

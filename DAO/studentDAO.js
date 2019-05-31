@@ -37,7 +37,25 @@ function queryStudentByClassAndAge(classNum, age) {
   connection.end()
 }
 
+function queryStudentByStuNum(stuNum, success) {
+  var querySql = "select * from student where stu_num = ?"
+  // 链接数据库
+  connection.connect()
+  // 查询数据
+  connection.query(querySql, stuNum, function (error, result) {
+    if (error == null) {
+      success(result)
+    } else {
+      console.log(error);
+    }
+  })
+
+  // 关闭数据库
+  connection.end()
+}
+
 module.exports = {
   "queryAllStudent": queryAllStudent,
-  "queryStudentByClassAndAge": queryStudentByClassAndAge
+  "queryStudentByClassAndAge": queryStudentByClassAndAge,
+  "queryStudentByStuNum": queryStudentByStuNum
 }
