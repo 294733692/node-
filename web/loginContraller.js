@@ -1,10 +1,15 @@
+var studentServer = require("../server/studentServer")
 var path = new Map()
 
 function getData(request, response) {
-  // response.writeHead(200)
-  // response.write("hello")
-  // response.end()
-  throw new Error("一个来自程序运行的错误")
+  studentServer.queryAllStudent(function (result) {
+    var resArr = [];
+    for(var i = 0; i < result.length; i++) {
+      resArr.push(result[i].name)
+    }
+    response.write(resArr.toString())
+    response.end()
+  })
 }
 path.set("/getData", getData)
 
