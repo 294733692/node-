@@ -6,5 +6,23 @@
 </head>
 <body>
   这是Main页面
+  <input type="file" id="file">
+  <input type="button" onclick="submitFile()" value="上传">
 </body>
+<script>
+  function submitFile() {
+    var file = document.getElementById("file").files[0]
+
+    var form = new FormData()
+
+    form.append('file', file)
+
+    var xhr = new XMLHttpRequest()
+    xhr.open("POST", "/testFileUpload", true)
+    xhr.onload = function() {
+      alert("上传完成")
+    }
+    xhr.send(form)
+  }
+</script>
 </html>
