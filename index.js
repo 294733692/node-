@@ -3,6 +3,7 @@ var url = require("url")
 var fs = require('fs')
 var globalConfig = require("./config")
 var loader = require("./loader")
+var filterSet = require("./filterloader")
 var log = require("./log")
 
 http.createServer(function(request, response) {
@@ -10,6 +11,15 @@ http.createServer(function(request, response) {
   var params = url.parse(request.url, true).query
   var isStatic = isStaticsRequset(pathName)
   log(pathName)
+
+  for(var i = 0; i < filterSet.length; i++) {
+    var flag = filterSet[i](request, response)
+
+    if(!flag) {
+      return
+    }
+  }
+
   if (isStatic) {// 请求静态文件
     try {
       var data = fs.readFileSync(globalConfig["page_path"] + pathName)

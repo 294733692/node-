@@ -7,26 +7,29 @@
   <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-  <input type="text" id="stuNum" placeholder="学号">
-  <input type="password" id="password" placeholder="密码">
-  <input type="submit" value="提交" onclick="login()">
+  <form method="post" action="/login">
+    <input type="text" name="stuNum" id="stuNum" placeholder="学号">
+    <input type="password" name="password" id="password" placeholder="密码">
+    <input type="submit" value="提交">
+  </form>
 </body>
 <script>
   function login() {
-    console.log(111);
     var getNum = document.getElementById("stuNum").value
     var password = document.getElementById("password").value
     var params = "stuNum=" + getNum + "&password=" + password
 
     var xml = new XMLHttpRequest()
-    xml.open("GET", "/login?" + params, true)
-    xml.send(null)
+    // xml.open("GET", "/login?" + params, true)
+    xml.open("POST", "/login", true)
+    xml.send(params)
     xml.onreadystatechange = function() {
       if(xml.readyState == 4 && xml.status == 200) {
         console.log(xml.responseText);
         console.log(typeof xml.responseText);
         if(xml.responseText == "OK") {
           alert("登录成功")
+          location.href = "./main.html";
         } else {
           alert("登录失败，请重新登录")
         }

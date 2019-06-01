@@ -1,8 +1,9 @@
-var connection = require('./dbutil')
+var dbutil = require('./dbutil')
 
 function queryAllStudent(success) {
   var querySql = "select * from student;"
-
+  //每次请求创建一个新的sql链接
+  var connection = dbutil.createConnection()
   // 链接数据库
   connection.connect()
   // 查询数据
@@ -22,6 +23,8 @@ function queryAllStudent(success) {
 function queryStudentByClassAndAge(classNum, age) {
   var querySql = "select * from student where class = ? and age = ?;"
   var queryParams = [classNum, age]
+  //每次请求创建一个新的sql链接
+  var connection = dbutil.createConnection()
   // 链接数据库
   connection.connect()
   // 查询数据
@@ -39,6 +42,8 @@ function queryStudentByClassAndAge(classNum, age) {
 
 function queryStudentByStuNum(stuNum, success) {
   var querySql = "select * from student where stu_num = ?"
+  //每次请求创建一个新的sql链接
+  var connection = dbutil.createConnection()
   // 链接数据库
   connection.connect()
   // 查询数据
